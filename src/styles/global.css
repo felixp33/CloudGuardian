@@ -1,4 +1,8 @@
-/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add your custom styles below */
 
 /* Base styles */
 :root {
