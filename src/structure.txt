@@ -1,0 +1,27 @@
+📁 app/
+   ├─ page.tsx                  # Homepage with project cards
+   ├─ login/page.tsx            # Login page
+   ├─ auth/callback/page.tsx    # GitHub OAuth callback handler
+   └─ projects/[id]/page.tsx    # Project detail page
+   
+📁 components/
+   ├─ Header.tsx                # Application header with navigation
+   ├─ ProjectCard.tsx           # Card component for projects
+   ├─ ProjectHeader.tsx         # Header for project detail page
+   ├─ ChangeItem.tsx            # Component for displaying changes/recommendations
+   ├─ Icons.tsx                 # SVG icons used throughout the app
+   │
+   ├─ 📁 auth/                  # Authentication components
+   │   ├─ GitHubLogin.tsx       # GitHub login button
+   │   └─ RepoSelector.tsx      # Repository selection component
+   │
+   └─ 📁 ui/                    # Generic UI components
+       ├─ Tab.tsx               # Tab component
+       └─ StatusBadge.tsx       # Status badge component
+       
+📁 lib/
+   ├─ mock-data.ts              # Mock data for development
+   └─ utils.ts                  # Utility functions
+   
+📁 types/
+   └─ index.ts    
