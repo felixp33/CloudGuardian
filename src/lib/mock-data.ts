@@ -448,7 +448,7 @@ function Dashboard() {
         <ProjectCard key={project.id} project={project} />
       ))}
     </div>
-  );
+  ); 
 }
 
 // Recommended implementation with SWR
