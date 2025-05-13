@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { Change } from "@/types";
-import {
-	ShieldIcon,
-	AlertCircleIcon,
-	SparklesIcon,
-	ChevronDownIcon,
-	ChevronUpIcon,
-	CodeIcon,
-	ExternalLinkIcon,
-} from "./Icons";
+import { ShieldIcon, AlertCircleIcon, SparklesIcon, ChevronDownIcon, ChevronUpIcon, ExternalLinkIcon } from "./Icons";
+import SimpleCodeBlock from "./CodeBlock";
 
 type ChangeItemProps = {
 	change: Change;
@@ -107,11 +100,11 @@ export default function ChangeItem({ change, type }: ChangeItemProps) {
 						{change.code && (
 							<div>
 								<h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Code Changes</h4>
-								<div className="bg-gray-50 dark:bg-gray-900 rounded-md overflow-auto">
-									<pre className="p-4 text-sm text-gray-800 dark:text-gray-200 font-mono whitespace-pre">
-										{change.code}
-									</pre>
-								</div>
+								{/* Use SimpleCodeBlock instead of the original pre tag */}
+								<SimpleCodeBlock
+									code={change.code}
+									title={change.path ? `Changes in ${change.path}` : undefined}
+								/>
 							</div>
 						)}
 

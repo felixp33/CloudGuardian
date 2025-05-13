@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { Project } from "@/types";
 import { MockProjects } from "@/lib/mock-data";
-import Header from "@/conponents/Header";
-import ProjectCard from "@/conponents/ProjectCard";
+import Header from "@/components/Header";
+import ProjectCard from "@/components/ProjectCard";
 
 export default function Home() {
 	const [projects, setProjects] = useState<Project[]>(MockProjects);

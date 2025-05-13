@@ -4,10 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Project } from "@/types";
 import { MockProjects } from "@/lib/mock-data";
-import Header from "@/conponents/Header";
-import ProjectHeader from "@/conponents/ProjectHeader";
-import { AlertCircleIcon, ChevronLeftIcon, ShieldIcon, SparklesIcon } from "@/conponents/Icons";
-import ChangeItem from "@/conponents/ChangeItem";
+import Header from "@/components/Header";
+import ProjectHeader from "@/components/ProjectHeader";
+import { AlertCircleIcon, ChevronLeftIcon, ShieldIcon, SparklesIcon } from "@/components/Icons";
+import ChangeItem from "@/components/ChangeItem";
 
 export default function ProjectDetailPage() {
 	const router = useRouter();

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import RepoSelector from "@/conponents/auth/RepoSelector";
+import RepoSelector from "@/components/auth/RepoSelector";
 
 export default function GitHubCallback() {
 	const router = useRouter();
