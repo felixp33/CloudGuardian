@@ -1,6 +1,6 @@
 "use client";
 
-import GitHubLogin from "@/conponents/auth/GitHubLogin";
+import GitHubLogin from "@/components/auth/GitHubLogin";
 import React from "react";
 
 export default function LoginPage() {
