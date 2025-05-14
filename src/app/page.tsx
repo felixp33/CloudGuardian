@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import ProjectCard from "@/components/ProjectCard";
 
 export default function Home() {
-	const [projects, setProjects] = useState<Project[]>(MockProjects);
+	const [projects] = useState<Project[]>(MockProjects);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [sortBy, setSortBy] = useState<"activity" | "alphabetical" | "issues">("activity");
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
