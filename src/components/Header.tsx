@@ -1,8 +1,19 @@
-// components/Header.tsx
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+	const pathname = usePathname();
+
+	const getLinkClassName = (path: string) => {
+		const isActive = pathname === path;
+		return isActive
+			? "border-blue-500 text-gray-900 dark:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+			: "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium";
+	};
+
 	return (
 		<header className="bg-white dark:bg-gray-800 shadow-sm">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,22 +26,13 @@ export default function Header() {
 							</Link>
 						</div>
 						<nav className="hidden sm:ml-6 sm:flex sm:space-x-8" aria-label="Global">
-							<Link
-								href="/"
-								className="border-blue-500 text-gray-900 dark:text-white inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-							>
+							<Link href="/" className={getLinkClassName("/")}>
 								Projects
 							</Link>
-							<Link
-								href="/reports"
-								className="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-							>
+							<Link href="/reports" className={getLinkClassName("/reports")}>
 								Reports
 							</Link>
-							<Link
-								href="/settings"
-								className="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-							>
+							<Link href="/settings" className={getLinkClassName("/settings")}>
 								Settings
 							</Link>
 						</nav>
