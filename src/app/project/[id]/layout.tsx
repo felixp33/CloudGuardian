@@ -5,7 +5,6 @@ import React from "react";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
-import Footer from "@/components/layout/Footer";
 import { MockProjects } from "@/lib/mock-data";
 
 export default function ProjectLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +18,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 		return (
 			<div className="min-h-screen flex flex-col bg-gray-900 text-white">
 				<Navbar />
-				<main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+				<main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
 					<div className="text-center py-12">
 						<h2 className="text-2xl font-bold">Project not found</h2>
 						<p className="mt-2 text-gray-400">
@@ -45,7 +44,6 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						</a>
 					</div>
 				</main>
-				<Footer />
 			</div>
 		);
 	}
@@ -59,34 +57,19 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 
 			{/* Main content area with sidebar and content */}
 			<div className="flex flex-1 pt-16">
-				{" "}
-				{/* pt-16 to account for the fixed navbar height */}
 				{/* Fixed sidebar */}
 				<div className="fixed w-64 top-16 bottom-0 left-0 overflow-y-auto border-r border-gray-800 bg-gray-900">
 					<Sidebar projectId={projectId} />
 				</div>
 				{/* Main content with left margin */}
-				<main className="flex-1 ml-64 pb-16">
-					{" "}
-					{/* pb-16 to account for footer height */}
+				<main className="flex-1 ml-64">
 					<div className="p-6">
 						<div className="max-w-7xl mx-auto">
-							{/* Project header info */}
-							<div className="mb-6">
-								<h1 className="text-2xl font-bold">{project.name}</h1>
-								<p className="text-gray-400">{project.owner}</p>
-							</div>
-
 							{/* Page content */}
-							<div className="mt-6">{children}</div>
+							<div>{children}</div>
 						</div>
 					</div>
 				</main>
-			</div>
-
-			{/* Fixed footer at the bottom */}
-			<div className="fixed bottom-0 inset-x-0 z-10 ml-64 bg-gray-900 border-t border-gray-800">
-				<Footer />
 			</div>
 		</div>
 	);

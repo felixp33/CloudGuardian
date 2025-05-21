@@ -4,6 +4,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { MockProjects } from "@/lib/mock-data";
 
 interface SidebarProps {
 	projectId: string;
@@ -11,6 +12,9 @@ interface SidebarProps {
 
 export default function Sidebar({ projectId }: SidebarProps) {
 	const pathname = usePathname();
+
+	// Find the current project from mock data
+	const project = MockProjects.find((p) => p.id === projectId);
 
 	// Navigation items for the sidebar
 	const navItems = [
@@ -127,12 +131,18 @@ export default function Sidebar({ projectId }: SidebarProps) {
 	};
 
 	return (
-		// The key fix: position the sidebar below the header
-		// We use pt-16 to push the sidebar content down below the header (which is 4rem/64px tall)
 		<div className="h-screen pt-16 bg-gray-900 w-64 border-r border-gray-800 flex-shrink-0 overflow-y-auto fixed left-0 top-0">
 			<div className="flex flex-col h-full">
-				<div className="py-6 flex-grow">
-					<nav className="mt-5 px-2 space-y-1">
+				{/* Project name at the top of the sidebar */}
+				{project && (
+					<div className="px-4 py-5 border-b border-gray-800">
+						<h2 className="text-xl font-bold text-white">{project.name}</h2>
+						<p className="text-sm text-gray-400">{project.owner}</p>
+					</div>
+				)}
+
+				<div className="py-4 flex-grow">
+					<nav className="px-2 space-y-1">
 						{navItems.map((item) => (
 							<Link
 								key={item.path}

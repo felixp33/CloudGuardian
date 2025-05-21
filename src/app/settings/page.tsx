@@ -72,7 +72,8 @@ export default function SettingsPage() {
 		<div className="min-h-screen bg-gray-900">
 			<Navbar />
 
-			<main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+			{/* Add sufficient top padding to clear the fixed header */}
+			<main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24">
 				<div className="flex justify-between items-center mb-6">
 					<h1 className="text-2xl font-bold text-white">Settings</h1>
 
@@ -84,7 +85,7 @@ export default function SettingsPage() {
 					</button>
 				</div>
 
-				{/* Settings Panel */}
+				{/* Application Settings Panel */}
 				<div className="bg-gray-800 rounded-lg overflow-hidden shadow mb-6">
 					<div className="bg-gray-750 px-4 py-3 border-b border-gray-700">
 						<h2 className="text-lg font-medium text-white">Application Settings</h2>

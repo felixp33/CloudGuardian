@@ -177,9 +177,9 @@ export default function Navbar() {
 						{/* Main navigation */}
 						<div className="hidden md:ml-6 md:flex md:space-x-4">
 							<Link
-								href="/dashboard"
+								href="/"
 								className={`px-3 py-2 rounded-md text-sm font-medium ${
-									pathname === "/dashboard" ? "text-white" : "text-gray-300 hover:text-white"
+									pathname === "/" ? "text-white" : "text-gray-300 hover:text-white"
 								}`}
 							>
 								Dashboard

@@ -116,7 +116,8 @@ export default function DocsPage() {
 		<div className="min-h-screen bg-gray-900">
 			<Navbar />
 
-			<main className="max-w-4xl mx-auto px-4 py-8">
+			{/* Add sufficient top padding to clear the fixed header */}
+			<main className="max-w-4xl mx-auto px-4 py-8 pt-24">
 				<div className="mb-8">
 					<h1 className="text-3xl font-bold text-white mb-4">Documentation</h1>
 					<p className="text-gray-400 mb-6">
