@@ -1,6 +1,6 @@
+// src/app/layout.tsx (Root Layout)
 import type { Metadata } from "next";
 import "@/styles/global.css";
-import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
 	title: "DevGuard - Security Monitoring for GitHub Repositories",
@@ -14,10 +14,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className="bg-gray-900 text-white flex flex-col min-h-screen">
-				<div className="flex-grow">{children}</div>
-				<Footer />
-			</body>
+			<body className="bg-gray-900 text-white">{children}</body>
 		</html>
 	);
 }

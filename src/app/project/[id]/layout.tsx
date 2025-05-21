@@ -5,6 +5,7 @@ import React from "react";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
+import Footer from "@/components/layout/Footer";
 import { MockProjects } from "@/lib/mock-data";
 
 export default function ProjectLayout({ children }: { children: React.ReactNode }) {
@@ -16,9 +17,9 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 
 	if (!project) {
 		return (
-			<div className="min-h-screen bg-gray-900 text-white">
+			<div className="min-h-screen flex flex-col bg-gray-900 text-white">
 				<Navbar />
-				<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+				<main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 					<div className="text-center py-12">
 						<h2 className="text-2xl font-bold">Project not found</h2>
 						<p className="mt-2 text-gray-400">
@@ -44,22 +45,30 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						</a>
 					</div>
 				</main>
+				<Footer />
 			</div>
 		);
 	}
 
 	return (
-		<div className="min-h-screen bg-gray-900 text-white">
-			<Navbar />
-			<div className="flex pt-16">
+		<div className="min-h-screen flex flex-col bg-gray-900 text-white">
+			{/* Fixed navbar */}
+			<div className="fixed top-0 inset-x-0 z-10 bg-gray-900 border-b border-gray-800">
+				<Navbar />
+			</div>
+
+			{/* Main content area with sidebar and content */}
+			<div className="flex flex-1 pt-16">
 				{" "}
-				{/* Add top padding to account for fixed navbar */}
-				{/* Fixed position sidebar */}
-				<Sidebar projectId={projectId} />
-				{/* Main content with padding to account for the fixed sidebar */}
-				<main className="flex-1 ml-64 overflow-auto bg-gray-900 h-[calc(100vh-4rem)]">
+				{/* pt-16 to account for the fixed navbar height */}
+				{/* Fixed sidebar */}
+				<div className="fixed w-64 top-16 bottom-0 left-0 overflow-y-auto border-r border-gray-800 bg-gray-900">
+					<Sidebar projectId={projectId} />
+				</div>
+				{/* Main content with left margin */}
+				<main className="flex-1 ml-64 pb-16">
 					{" "}
-					{/* Subtract header height */}
+					{/* pb-16 to account for footer height */}
 					<div className="p-6">
 						<div className="max-w-7xl mx-auto">
 							{/* Project header info */}
@@ -73,6 +82,11 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						</div>
 					</div>
 				</main>
+			</div>
+
+			{/* Fixed footer at the bottom */}
+			<div className="fixed bottom-0 inset-x-0 z-10 ml-64 bg-gray-900 border-t border-gray-800">
+				<Footer />
 			</div>
 		</div>
 	);

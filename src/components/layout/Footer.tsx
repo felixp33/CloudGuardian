@@ -1,13 +1,18 @@
+// src/components/layout/Footer.tsx
 "use client";
 
 import React from "react";
 import Link from "next/link";
 
-export default function Footer() {
+interface FooterProps {
+	className?: string;
+}
+
+export default function Footer({ className = "" }: FooterProps) {
 	const currentYear = new Date().getFullYear();
 
 	return (
-		<footer className="bg-gray-900 border-t border-gray-800">
+		<footer className={`bg-gray-900 border-t border-gray-800 ${className}`}>
 			<div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 				<div className="flex flex-col md:flex-row justify-between items-center">
 					<div className="flex items-center mb-4 md:mb-0">
