@@ -1,3 +1,4 @@
+// src/components/layout/Navbar.tsx
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
@@ -41,7 +42,7 @@ export default function Navbar() {
 	};
 
 	return (
-		<nav className="bg-gray-900 border-b border-gray-800">
+		<nav className="fixed top-0 left-0 right-0 z-10 bg-gray-900 border-b border-gray-800">
 			<div className="max-w-full mx-auto px-4">
 				<div className="flex justify-between h-16">
 					<div className="flex">

@@ -122,11 +122,11 @@ export default function Sidebar({ projectId }: SidebarProps) {
 		if (exact) {
 			return pathname === path;
 		}
-		return pathname === path || pathname?.startsWith(path + "/");
+		return pathname === path || pathname?.startsWith(`${path}/`);
 	};
 
 	return (
-		<div className="h-screen bg-gray-900 w-64 border-r border-gray-800 flex-shrink-0">
+		<div className="fixed top-16 bottom-0 bg-gray-900 w-64 border-r border-gray-800 flex-shrink-0 overflow-y-auto">
 			<div className="flex flex-col h-full">
 				<div className="py-6 flex-grow">
 					<nav className="mt-5 px-2 space-y-1">
@@ -145,29 +145,6 @@ export default function Sidebar({ projectId }: SidebarProps) {
 							</Link>
 						))}
 					</nav>
-				</div>
-
-				{/* Bottom section of sidebar */}
-				<div className="p-4 border-t border-gray-800">
-					<div className="flex items-center">
-						<svg
-							className="h-5 w-5 text-gray-400"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-							/>
-						</svg>
-						<Link href="/docs" className="ml-2 text-sm text-gray-300 hover:text-white">
-							Help & Documentation
-						</Link>
-					</div>
 				</div>
 			</div>
 		</div>

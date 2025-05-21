@@ -1,3 +1,4 @@
+// src/app/project/[id]/layout.tsx
 "use client";
 
 import React from "react";
@@ -50,9 +51,15 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 	return (
 		<div className="min-h-screen bg-gray-900 text-white">
 			<Navbar />
-			<div className="flex">
+			<div className="flex pt-16">
+				{" "}
+				{/* Add top padding to account for fixed navbar */}
+				{/* Fixed position sidebar */}
 				<Sidebar projectId={projectId} />
-				<main className="flex-1 overflow-auto bg-gray-900">
+				{/* Main content with padding to account for the fixed sidebar */}
+				<main className="flex-1 ml-64 overflow-auto bg-gray-900 h-[calc(100vh-4rem)]">
+					{" "}
+					{/* Subtract header height */}
 					<div className="p-6">
 						<div className="max-w-7xl mx-auto">
 							{/* Project header info */}
