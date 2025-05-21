@@ -1,200 +1,177 @@
+// src/app/project/[id]/page.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Project } from "@/types";
 import { MockProjects } from "@/lib/mock-data";
-import Header from "@/components/Header";
-import ProjectHeader from "@/components/ProjectHeader";
-import { AlertCircleIcon, ChevronLeftIcon, ShieldIcon, SparklesIcon } from "@/components/Icons";
-import ChangeItem from "@/components/ChangeItem";
+import { Change } from "@/types";
+import NewsAlertItem from "@/components/project/NewsAlertItem";
 
-export default function ProjectDetailPage() {
+export default function NewsAlertsPage() {
 	const router = useRouter();
 	const params = useParams();
-	const [project, setProject] = useState<Project | null>(null);
-	const [activeTab, setActiveTab] = useState<"automatic" | "security" | "improvements">("security");
+	const projectId = params?.id as string;
 
-	// In a real app, we'd fetch this from an API
+	// Find the current project
+	const project = MockProjects.find((p) => p.id === projectId);
+
+	// State for filters
+	const [activeFilter, setActiveFilter] = useState<"all" | "security" | "auto" | "improvement">("all");
+
+	// State for alerts
+	const [newsItems, setNewsItems] = useState<Change[]>([]);
+
 	useEffect(() => {
-		if (params?.id) {
-			const foundProject = MockProjects.find((p) => p.id === params.id);
-			setProject(foundProject || null);
+		if (project) {
+			// Combine all alerts from the project
+			const allAlerts: Change[] = [
+				...project.securityRecommendations,
+				...project.automaticChanges,
+				...project.improvementSuggestions,
+			];
 
-			// Default to the tab with issues, prioritizing security
-			if (foundProject) {
-				if (foundProject.securityRecommendations.length > 0) {
-					setActiveTab("security");
-				} else if (foundProject.automaticChanges.length > 0) {
-					setActiveTab("automatic");
-				} else if (foundProject.improvementSuggestions.length > 0) {
-					setActiveTab("improvements");
-				}
-			}
+			setNewsItems(allAlerts);
 		}
-	}, [params]);
+	}, [project]);
+
+	// Apply filters to news items
+	const filteredNewsItems = newsItems.filter((item) => {
+		if (activeFilter === "all") return true;
+		if (activeFilter === "security" && item.id.startsWith("sec")) return true;
+		if (activeFilter === "auto" && item.id.startsWith("auto")) return true;
+		if (activeFilter === "improvement" && item.id.startsWith("imp")) return true;
+		return false;
+	});
+
+	// Handler for starting the workflow process (moving to in-progress)
+	const handleStartWorkflow = (changeId: string) => {
+		// In a real app, this would move the item to In Progress state in the backend
+		// For now, we'll just redirect to the in-progress page
+		router.push(`/project/${projectId}/in-progress`);
+	};
+
+	// Handler to dismiss an alert
+	const handleDismiss = (changeId: string) => {
+		setNewsItems((prevItems) => prevItems.filter((item) => item.id !== changeId));
+	};
 
 	if (!project) {
-		return (
-			<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-				<Header />
-				<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-					<div className="text-center py-12">
-						<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Project not found</h2>
-						<p className="mt-2 text-gray-500 dark:text-gray-400">
-							The project you're looking for doesn't exist or you don't have access to it.
-						</p>
-						<button
-							onClick={() => router.push("/")}
-							className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 dark:text-blue-100 dark:bg-blue-900 dark:hover:bg-blue-800"
-						>
-							<ChevronLeftIcon className="h-5 w-5 mr-2" />
-							Back to projects
-						</button>
-					</div>
-				</main>
-			</div>
-		);
+		return <div className="p-4 text-white">Project not found</div>;
 	}
 
 	return (
-		<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-			<Header />
+		<div>
+			<div className="flex justify-between items-center mb-6">
+				<h2 className="text-2xl font-bold text-white">News & Alerts</h2>
 
-			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-				{/* Back button */}
-				<div className="mb-6">
+				<div className="flex space-x-2">
+					<div className="relative">
+						<select
+							className="bg-gray-800 border border-gray-700 text-white rounded-md px-4 py-2 pr-8 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+							value={activeFilter}
+							onChange={(e) => setActiveFilter(e.target.value as any)}
+						>
+							<option value="all">All Alerts</option>
+							<option value="security">Security Issues</option>
+							<option value="auto">Auto-fix Issues</option>
+							<option value="improvement">Improvements</option>
+						</select>
+						<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
+							<svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+							</svg>
+						</div>
+					</div>
+
 					<button
-						onClick={() => router.push("/")}
-						className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+						onClick={() => {
+							// Apply all fixes at once would move all items to in-progress
+							router.push(`/project/${projectId}/in-progress`);
+						}}
+						className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
 					>
-						<ChevronLeftIcon className="h-5 w-5 mr-1" />
-						Back to projects
+						Apply All Fixes
 					</button>
 				</div>
+			</div>
 
-				{/* Project header with stats */}
-				<ProjectHeader project={project} />
-
-				{/* Tabs navigation */}
-				<div className="mt-8 mb-6 border-b border-gray-200 dark:border-gray-700">
-					<div className="flex space-x-8">
-						<button
-							className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
-								activeTab === "automatic"
-									? "border-green-500 text-green-600 dark:text-green-400"
-									: "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-							}`}
-							onClick={() => setActiveTab("automatic")}
-						>
-							<ShieldIcon className="h-5 w-5 mr-2" />
-							Automatic Changes
-							{project.automaticChanges.length > 0 && (
-								<span className="ml-2 bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-									{project.automaticChanges.length}
-								</span>
-							)}
-						</button>
-
-						<button
-							className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
-								activeTab === "security"
-									? "border-red-500 text-red-600 dark:text-red-400"
-									: "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-							}`}
-							onClick={() => setActiveTab("security")}
-						>
-							<AlertCircleIcon className="h-5 w-5 mr-2" />
-							Security Recommendations
-							{project.securityRecommendations.length > 0 && (
-								<span className="ml-2 bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-									{project.securityRecommendations.length}
-								</span>
-							)}
-						</button>
-
-						<button
-							className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center ${
-								activeTab === "improvements"
-									? "border-blue-500 text-blue-600 dark:text-blue-400"
-									: "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-							}`}
-							onClick={() => setActiveTab("improvements")}
-						>
-							<SparklesIcon className="h-5 w-5 mr-2" />
-							Improvement Suggestions
-							{project.improvementSuggestions.length > 0 && (
-								<span className="ml-2 bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-									{project.improvementSuggestions.length}
-								</span>
-							)}
-						</button>
+			{/* Summary section */}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+				<div className="bg-gray-800 rounded-lg p-4">
+					<div className="text-sm font-medium text-gray-400 mb-1">Security Issues</div>
+					<div className="flex items-baseline">
+						<span className="text-2xl font-semibold text-red-500">{project.securityRecommendations.length}</span>
+						{project.securityRecommendations.length > 0 && (
+							<span className="ml-2 text-xs text-gray-400">
+								{project.securityRecommendations.filter((r) => r.severity === "High").length} high priority
+							</span>
+						)}
 					</div>
 				</div>
 
-				{/* Tab content */}
-				<div className="space-y-6">
-					{activeTab === "automatic" && (
-						<>
-							{project.automaticChanges.length > 0 ? (
-								project.automaticChanges.map((change) => (
-									<ChangeItem key={change.id} change={change} type="automatic" />
-								))
-							) : (
-								<div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
-									<ShieldIcon className="mx-auto h-12 w-12 text-gray-400" />
-									<h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-100">
-										No automatic changes
-									</h3>
-									<p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-										There are no automatic changes applied to this project yet.
-									</p>
-								</div>
-							)}
-						</>
-					)}
-
-					{activeTab === "security" && (
-						<>
-							{project.securityRecommendations.length > 0 ? (
-								project.securityRecommendations.map((recommendation) => (
-									<ChangeItem key={recommendation.id} change={recommendation} type="security" />
-								))
-							) : (
-								<div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
-									<AlertCircleIcon className="mx-auto h-12 w-12 text-gray-400" />
-									<h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-100">
-										No security recommendations
-									</h3>
-									<p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-										Your project has no security recommendations at this time.
-									</p>
-								</div>
-							)}
-						</>
-					)}
-
-					{activeTab === "improvements" && (
-						<>
-							{project.improvementSuggestions.length > 0 ? (
-								project.improvementSuggestions.map((suggestion) => (
-									<ChangeItem key={suggestion.id} change={suggestion} type="improvement" />
-								))
-							) : (
-								<div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
-									<SparklesIcon className="mx-auto h-12 w-12 text-gray-400" />
-									<h3 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-100">
-										No improvement suggestions
-									</h3>
-									<p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-										There are no improvement suggestions for this project right now.
-									</p>
-								</div>
-							)}
-						</>
-					)}
+				<div className="bg-gray-800 rounded-lg p-4">
+					<div className="text-sm font-medium text-gray-400 mb-1">Auto-fixes</div>
+					<div className="flex items-baseline">
+						<span className="text-2xl font-semibold text-green-500">{project.automaticChanges.length}</span>
+						{project.automaticChanges.length > 0 && (
+							<span className="ml-2 text-xs text-gray-400">Ready to apply</span>
+						)}
+					</div>
 				</div>
-			</main>
+
+				<div className="bg-gray-800 rounded-lg p-4">
+					<div className="text-sm font-medium text-gray-400 mb-1">Improvements</div>
+					<div className="flex items-baseline">
+						<span className="text-2xl font-semibold text-blue-500">{project.improvementSuggestions.length}</span>
+						{project.improvementSuggestions.length > 0 && (
+							<span className="ml-2 text-xs text-gray-400">Performance & code quality</span>
+						)}
+					</div>
+				</div>
+			</div>
+
+			{filteredNewsItems.length > 0 ? (
+				<div className="space-y-4">
+					{filteredNewsItems.map((change) => (
+						<NewsAlertItem
+							key={change.id}
+							change={change}
+							onAction={handleStartWorkflow}
+							onDismiss={handleDismiss}
+						/>
+					))}
+				</div>
+			) : (
+				<div className="text-center py-16 bg-gray-800 rounded-lg">
+					<svg
+						className="mx-auto h-12 w-12 text-gray-400"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+					</svg>
+					<h3 className="mt-2 text-lg font-medium text-white">All caught up!</h3>
+					<p className="mt-1 text-sm text-gray-400">
+						{activeFilter === "all"
+							? "There are no new alerts or recommendations for this project."
+							: `No ${
+									activeFilter === "security"
+										? "security issues"
+										: activeFilter === "auto"
+										? "auto-fix issues"
+										: "improvements"
+							  } found.`}
+					</p>
+					<button
+						onClick={() => setActiveFilter("all")}
+						className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+					>
+						{activeFilter === "all" ? "View In-Progress Changes" : "Show All Alerts"}
+					</button>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -1,8 +1,19 @@
+// src/components/project/AppliedChangeItem.tsx
 import React, { useState } from "react";
 import { Change } from "@/types";
 
+// Extended Change type with workflow properties
+export interface AppliedChange extends Change {
+	workflowStatus?: string;
+	mergeTime?: string;
+	testBranch?: string;
+	commitTime?: string;
+	testStartTime?: string;
+	testEndTime?: string;
+}
+
 interface AppliedChangeItemProps {
-	change: Change;
+	change: AppliedChange;
 }
 
 export default function AppliedChangeItem({ change }: AppliedChangeItemProps) {
@@ -81,14 +92,18 @@ export default function AppliedChangeItem({ change }: AppliedChangeItemProps) {
 						<div>
 							<div className="flex items-center">
 								<h3 className="text-lg font-medium text-white">{change.title}</h3>
-								<span className="ml-2 text-xs text-gray-400">• Applied {change.mergeTime}</span>
+								{change.mergeTime && (
+									<span className="ml-2 text-xs text-gray-400">• Applied {change.mergeTime}</span>
+								)}
 							</div>
 
 							<div className="mt-1 flex items-center text-sm text-gray-400">
 								{change.path && (
 									<span className="text-xs font-mono bg-gray-700 px-2 py-0.5 rounded mr-2">{change.path}</span>
 								)}
-								<span className="text-xs px-2 py-0.5 rounded bg-gray-700">{change.testBranch}</span>
+								{change.testBranch && (
+									<span className="text-xs px-2 py-0.5 rounded bg-gray-700">{change.testBranch}</span>
+								)}
 							</div>
 						</div>
 					</div>
@@ -129,97 +144,107 @@ export default function AppliedChangeItem({ change }: AppliedChangeItemProps) {
 							</div>
 						)}
 
-						{/* Workflow timeline */}
-						<div>
-							<h4 className="text-sm font-medium text-white mb-3">Change Timeline</h4>
-							<div className="relative pb-8">
-								<div className="absolute top-0 bottom-0 left-3 bg-gray-700 w-0.5"></div>
+						{/* Only show timeline if we have the times */}
+						{(change.commitTime || change.testStartTime || change.testEndTime || change.mergeTime) && (
+							<div>
+								<h4 className="text-sm font-medium text-white mb-3">Change Timeline</h4>
+								<div className="relative pb-8">
+									<div className="absolute top-0 bottom-0 left-3 bg-gray-700 w-0.5"></div>
 
-								<div className="relative flex items-center mb-4">
-									<div className="h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center z-10">
-										<svg
-											className="h-3 w-3 text-white"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 20 20"
-											fill="currentColor"
-										>
-											<path
-												fillRule="evenodd"
-												d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-												clipRule="evenodd"
-											/>
-										</svg>
-									</div>
-									<div className="ml-4">
-										<p className="text-sm font-medium text-white">Committed to test branch</p>
-										<p className="text-xs text-gray-400">{change.commitTime}</p>
-									</div>
-								</div>
+									{change.commitTime && (
+										<div className="relative flex items-center mb-4">
+											<div className="h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center z-10">
+												<svg
+													className="h-3 w-3 text-white"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 20 20"
+													fill="currentColor"
+												>
+													<path
+														fillRule="evenodd"
+														d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+														clipRule="evenodd"
+													/>
+												</svg>
+											</div>
+											<div className="ml-4">
+												<p className="text-sm font-medium text-white">Committed to test branch</p>
+												<p className="text-xs text-gray-400">{change.commitTime}</p>
+											</div>
+										</div>
+									)}
 
-								<div className="relative flex items-center mb-4">
-									<div className="h-6 w-6 rounded-full bg-yellow-500 flex items-center justify-center z-10">
-										<svg
-											className="h-3 w-3 text-white"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 20 20"
-											fill="currentColor"
-										>
-											<path
-												fillRule="evenodd"
-												d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-												clipRule="evenodd"
-											/>
-										</svg>
-									</div>
-									<div className="ml-4">
-										<p className="text-sm font-medium text-white">Testing started</p>
-										<p className="text-xs text-gray-400">{change.testStartTime}</p>
-									</div>
-								</div>
+									{change.testStartTime && (
+										<div className="relative flex items-center mb-4">
+											<div className="h-6 w-6 rounded-full bg-yellow-500 flex items-center justify-center z-10">
+												<svg
+													className="h-3 w-3 text-white"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 20 20"
+													fill="currentColor"
+												>
+													<path
+														fillRule="evenodd"
+														d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+														clipRule="evenodd"
+													/>
+												</svg>
+											</div>
+											<div className="ml-4">
+												<p className="text-sm font-medium text-white">Testing started</p>
+												<p className="text-xs text-gray-400">{change.testStartTime}</p>
+											</div>
+										</div>
+									)}
 
-								<div className="relative flex items-center mb-4">
-									<div className="h-6 w-6 rounded-full bg-green-500 flex items-center justify-center z-10">
-										<svg
-											className="h-3 w-3 text-white"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 20 20"
-											fill="currentColor"
-										>
-											<path
-												fillRule="evenodd"
-												d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-												clipRule="evenodd"
-											/>
-										</svg>
-									</div>
-									<div className="ml-4">
-										<p className="text-sm font-medium text-white">Tests passed</p>
-										<p className="text-xs text-gray-400">{change.testEndTime}</p>
-									</div>
-								</div>
+									{change.testEndTime && (
+										<div className="relative flex items-center mb-4">
+											<div className="h-6 w-6 rounded-full bg-green-500 flex items-center justify-center z-10">
+												<svg
+													className="h-3 w-3 text-white"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 20 20"
+													fill="currentColor"
+												>
+													<path
+														fillRule="evenodd"
+														d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+														clipRule="evenodd"
+													/>
+												</svg>
+											</div>
+											<div className="ml-4">
+												<p className="text-sm font-medium text-white">Tests passed</p>
+												<p className="text-xs text-gray-400">{change.testEndTime}</p>
+											</div>
+										</div>
+									)}
 
-								<div className="relative flex items-center">
-									<div className="h-6 w-6 rounded-full bg-purple-500 flex items-center justify-center z-10">
-										<svg
-											className="h-3 w-3 text-white"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 20 20"
-											fill="currentColor"
-										>
-											<path
-												fillRule="evenodd"
-												d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-												clipRule="evenodd"
-											/>
-										</svg>
-									</div>
-									<div className="ml-4">
-										<p className="text-sm font-medium text-white">Merged to main branch</p>
-										<p className="text-xs text-gray-400">{change.mergeTime}</p>
-									</div>
+									{change.mergeTime && (
+										<div className="relative flex items-center">
+											<div className="h-6 w-6 rounded-full bg-purple-500 flex items-center justify-center z-10">
+												<svg
+													className="h-3 w-3 text-white"
+													xmlns="http://www.w3.org/2000/svg"
+													viewBox="0 0 20 20"
+													fill="currentColor"
+												>
+													<path
+														fillRule="evenodd"
+														d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+														clipRule="evenodd"
+													/>
+												</svg>
+											</div>
+											<div className="ml-4">
+												<p className="text-sm font-medium text-white">Merged to main branch</p>
+												<p className="text-xs text-gray-400">{change.mergeTime}</p>
+											</div>
+										</div>
+									)}
 								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				)}
 			</div>

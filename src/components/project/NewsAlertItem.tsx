@@ -1,40 +1,24 @@
+// src/components/project/NewsAlertItem.tsx
 import React, { useState } from "react";
 import { Change } from "@/types";
-import WorkflowStatus from "@/components/ui/WorkflowStatus";
 
-interface NewsItemProps {
+interface NewsAlertItemProps {
 	change: Change;
-	onStatusChange?: (changeId: string, newStatus: string) => void;
-	onDismiss?: (changeId: string) => void;
+	onAction: (changeId: string) => void;
+	onDismiss: (changeId: string) => void;
 }
 
-export default function NewsItem({ change, onStatusChange, onDismiss }: NewsItemProps) {
+export default function NewsAlertItem({ change, onAction, onDismiss }: NewsAlertItemProps) {
 	const [expanded, setExpanded] = useState(false);
 
-	// Handle workflow action buttons
-	const handleCommit = () => {
-		if (onStatusChange) {
-			// Create a simulated test branch name
-			const testBranch = `fix/${change.id.toLowerCase()}-${Math.floor(Math.random() * 1000)}`;
-
-			// Update with commit details
-			onStatusChange(change.id, "committed");
-		}
-	};
-
-	const handleDismiss = () => {
-		if (onDismiss) {
-			onDismiss(change.id);
-		}
-	};
-
-	// Get icon and color based on severity or change type
-	const getTypeStyles = () => {
+	// Get type information based on change ID
+	const getTypeInfo = () => {
 		if (change.id.startsWith("auto")) {
 			return {
+				type: "Auto-Fix",
 				icon: (
 					<svg
-						className="h-5 w-5"
+						className="h-5 w-5 text-green-500"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -48,15 +32,17 @@ export default function NewsItem({ change, onStatusChange, onDismiss }: NewsItem
 						/>
 					</svg>
 				),
-				badge: "bg-green-900 text-green-200",
-				badgeText: "Auto-Fixed",
-				border: "border-green-800",
+				badge: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
+				badgeText: "Auto-Fix Available",
+				borderColor: "border-green-500",
+				actionText: "Apply Fix",
 			};
 		} else if (change.id.startsWith("sec")) {
 			return {
+				type: "Security",
 				icon: (
 					<svg
-						className="h-5 w-5"
+						className="h-5 w-5 text-red-500"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -70,15 +56,17 @@ export default function NewsItem({ change, onStatusChange, onDismiss }: NewsItem
 						/>
 					</svg>
 				),
-				badge: "bg-red-900 text-red-200",
+				badge: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
 				badgeText: "Security Risk",
-				border: "border-red-800",
+				borderColor: "border-red-500",
+				actionText: "Fix Security Issue",
 			};
 		} else {
 			return {
+				type: "Improvement",
 				icon: (
 					<svg
-						className="h-5 w-5"
+						className="h-5 w-5 text-blue-500"
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
 						viewBox="0 0 24 24"
@@ -87,40 +75,42 @@ export default function NewsItem({ change, onStatusChange, onDismiss }: NewsItem
 						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
 					</svg>
 				),
-				badge: "bg-blue-900 text-blue-200",
+				badge: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
 				badgeText: "Improvement",
-				border: "border-blue-800",
+				borderColor: "border-blue-500",
+				actionText: "Apply Improvement",
 			};
 		}
 	};
 
-	const typeStyles = getTypeStyles();
+	const typeInfo = getTypeInfo();
 
 	return (
 		<div
-			className={`bg-gray-800 border border-gray-700 rounded-lg overflow-hidden mb-4 border-l-4 ${typeStyles.border}`}
+			className={`bg-gray-800 border border-gray-700 rounded-lg overflow-hidden border-l-4 ${typeInfo.borderColor}`}
 		>
 			<div className="p-5">
-				<div className="flex items-start justify-between">
+				<div className="flex justify-between items-start">
 					<div className="flex items-start space-x-3">
-						{/* Type icon */}
-						<div className="text-blue-400 mt-0.5">{typeStyles.icon}</div>
+						<div className="mt-0.5">{typeInfo.icon}</div>
 
-						<div className="flex-1">
-							<div className="flex items-center flex-wrap">
-								<h3 className="text-lg font-medium text-white mr-2">{change.title}</h3>
-								<span className={`px-2 py-0.5 text-xs rounded-full ${typeStyles.badge}`}>
-									{typeStyles.badgeText}
+						<div>
+							<div className="flex items-center flex-wrap gap-2">
+								<h3 className="text-lg font-medium text-white">{change.title}</h3>
+								<span
+									className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${typeInfo.badge}`}
+								>
+									{typeInfo.badgeText}
 								</span>
 
 								{change.severity && (
 									<span
-										className={`ml-2 px-2 py-0.5 text-xs rounded-full ${
+										className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
 											change.severity === "High"
-												? "bg-red-900 text-red-200"
+												? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
 												: change.severity === "Medium"
-												? "bg-yellow-900 text-yellow-200"
-												: "bg-blue-900 text-blue-200"
+												? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
+												: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
 										}`}
 									>
 										{change.severity}
@@ -202,37 +192,20 @@ export default function NewsItem({ change, onStatusChange, onDismiss }: NewsItem
 							</div>
 						)}
 
-						{/* Action buttons */}
-						<div className="flex justify-end pt-4 border-t border-gray-700">
+						<div className="flex justify-end gap-3 pt-4 border-t border-gray-700">
 							<button
-								onClick={handleDismiss}
-								className="inline-flex items-center px-3 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600 mr-3"
+								onClick={() => onDismiss(change.id)}
+								className="px-3 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600"
 							>
 								Dismiss
 							</button>
 
-							{change.id.startsWith("auto") ? (
-								<button
-									onClick={handleCommit}
-									className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700"
-								>
-									Apply Fix
-								</button>
-							) : change.id.startsWith("sec") ? (
-								<button
-									onClick={handleCommit}
-									className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
-								>
-									Fix Security Issue
-								</button>
-							) : (
-								<button
-									onClick={handleCommit}
-									className="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
-								>
-									Apply Improvement
-								</button>
-							)}
+							<button
+								onClick={() => onAction(change.id)}
+								className="px-3 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+							>
+								{typeInfo.actionText}
+							</button>
 						</div>
 					</div>
 				)}
