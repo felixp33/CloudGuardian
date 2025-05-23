@@ -1,7 +1,8 @@
-// src/app/project/[id]/layout.tsx
+// src/components/layout/Footer.tsx
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
@@ -24,7 +25,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						<p className="mt-2 text-gray-400">
 							The project you're looking for doesn't exist or you don't have access to it.
 						</p>
-						<a
+						<Link
 							href="/"
 							className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
 						>
@@ -41,7 +42,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 								/>
 							</svg>
 							Back to projects
-						</a>
+						</Link>
 					</div>
 				</main>
 			</div>
@@ -77,6 +78,47 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 					</div>
 				</main>
 			</div>
+
+			{/* Footer */}
+			<footer className="bg-gray-800 border-t border-gray-700 py-6 mt-auto">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="flex flex-col md:flex-row justify-between items-center">
+						<div className="flex items-center mb-4 md:mb-0">
+							<div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold mr-3">
+								D
+							</div>
+							<span className="text-white font-bold text-xl">DevGuard</span>
+						</div>
+
+						<div className="flex space-x-6">
+							<Link href="/docs" className="text-gray-300 hover:text-white text-sm">
+								Documentation
+							</Link>
+							<Link href="/about" className="text-gray-300 hover:text-white text-sm">
+								About
+							</Link>
+							<a
+								href="https://github.com/devguard/devguard"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-gray-300 hover:text-white text-sm"
+							>
+								GitHub
+							</a>
+							<Link href="/terms" className="text-gray-300 hover:text-white text-sm">
+								Terms
+							</Link>
+							<Link href="/privacy" className="text-gray-300 hover:text-white text-sm">
+								Privacy
+							</Link>
+						</div>
+
+						<div className="text-gray-400 text-sm mt-4 md:mt-0">
+							© {new Date().getFullYear()} DevGuard. All rights reserved.
+						</div>
+					</div>
+				</div>
+			</footer>
 		</div>
 	);
 }
