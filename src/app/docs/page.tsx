@@ -44,18 +44,18 @@ export default function DocsPage() {
 			title: "Getting Started",
 			articles: [
 				{
-					title: "Introduction to DevGuard",
-					description: "Learn about DevGuard and how it helps protect your repositories.",
+					title: "Introduction to CloudGuardian",
+					description: "Learn about CloudGuardian and how it helps protect your repositories.",
 					link: "/docs/introduction",
 				},
 				{
 					title: "Connecting Your GitHub Repository",
-					description: "Step-by-step guide to connect your GitHub repositories to DevGuard.",
+					description: "Step-by-step guide to connect your GitHub repositories to CloudGuardian.",
 					link: "/docs/connecting-github",
 				},
 				{
 					title: "Understanding the Dashboard",
-					description: "Overview of the DevGuard dashboard and key metrics.",
+					description: "Overview of the CloudGuardian dashboard and key metrics.",
 					link: "/docs/dashboard-overview",
 				},
 			],
@@ -65,7 +65,7 @@ export default function DocsPage() {
 			articles: [
 				{
 					title: "Automatic Fixes",
-					description: "How DevGuard automatically fixes security vulnerabilities.",
+					description: "How CloudGuardian automatically fixes security vulnerabilities.",
 					link: "/docs/automatic-fixes",
 				},
 				{
@@ -75,12 +75,12 @@ export default function DocsPage() {
 				},
 				{
 					title: "Improvement Suggestions",
-					description: "Using DevGuard's improvement suggestions to enhance code quality.",
+					description: "Using CloudGuardian's improvement suggestions to enhance code quality.",
 					link: "/docs/improvement-suggestions",
 				},
 				{
 					title: "Test Branch Workflow",
-					description: "How DevGuard uses test branches to safely apply changes.",
+					description: "How CloudGuardian uses test branches to safely apply changes.",
 					link: "/docs/test-branch-workflow",
 				},
 			],
@@ -95,17 +95,17 @@ export default function DocsPage() {
 				},
 				{
 					title: "CI/CD Integration",
-					description: "Integrating DevGuard with your CI/CD pipeline.",
+					description: "Integrating CloudGuardian with your CI/CD pipeline.",
 					link: "/docs/cicd-integration",
 				},
 				{
 					title: "Team Collaboration",
-					description: "Managing team access and collaboration in DevGuard.",
+					description: "Managing team access and collaboration in CloudGuardian.",
 					link: "/docs/team-collaboration",
 				},
 				{
 					title: "API Reference",
-					description: "Complete API documentation for DevGuard.",
+					description: "Complete API documentation for CloudGuardian.",
 					link: "/docs/api-reference",
 				},
 			],
@@ -121,7 +121,7 @@ export default function DocsPage() {
 				<div className="mb-8">
 					<h1 className="text-3xl font-bold text-white mb-4">Documentation</h1>
 					<p className="text-gray-400 mb-6">
-						Find guides and references to help you get the most out of DevGuard's security monitoring
+						Find guides and references to help you get the most out of CloudGuardian's security monitoring
 						capabilities.
 					</p>
 
@@ -154,7 +154,9 @@ export default function DocsPage() {
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
 						<div className="p-4 bg-blue-900 bg-opacity-30 rounded-lg border border-blue-800">
 							<h3 className="text-lg font-medium text-white mb-2">Test Branch Workflow</h3>
-							<p className="text-gray-300 text-sm mb-3">Learn how DevGuard safely tests and applies changes.</p>
+							<p className="text-gray-300 text-sm mb-3">
+								Learn how CloudGuardian safely tests and applies changes.
+							</p>
 							<Link
 								href="/docs/test-branch-workflow"
 								className="text-blue-400 hover:text-blue-300 text-sm font-medium"
@@ -174,7 +176,9 @@ export default function DocsPage() {
 						</div>
 						<div className="p-4 bg-purple-900 bg-opacity-30 rounded-lg border border-purple-800">
 							<h3 className="text-lg font-medium text-white mb-2">Getting Started</h3>
-							<p className="text-gray-300 text-sm mb-3">New to DevGuard? Start here to set up your account.</p>
+							<p className="text-gray-300 text-sm mb-3">
+								New to CloudGuardian? Start here to set up your account.
+							</p>
 							<Link
 								href="/docs/getting-started"
 								className="text-purple-400 hover:text-purple-300 text-sm font-medium"
@@ -207,11 +211,11 @@ export default function DocsPage() {
 				<div className="mt-12 p-6 bg-gray-800 rounded-lg">
 					<h2 className="text-xl font-bold text-white mb-2">Need more help?</h2>
 					<p className="text-gray-400 mb-4">
-						Can't find what you're looking for? We're here to help you get the most out of DevGuard.
+						Can't find what you're looking for? We're here to help you get the most out of CloudGuardian.
 					</p>
 					<div className="flex flex-wrap gap-3">
 						<a
-							href="mailto:support@devguard.io"
+							href="mailto:support@CloudGuardian.io"
 							className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
 						>
 							<svg
@@ -231,7 +235,7 @@ export default function DocsPage() {
 							Contact Support
 						</a>
 						<a
-							href="https://github.com/devguard/docs/issues"
+							href="https://github.com/CloudGuardian/docs/issues"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700"
@@ -253,7 +257,7 @@ export default function DocsPage() {
 							Report an Issue
 						</a>
 						<a
-							href="https://github.com/devguard/devguard"
+							href="https://github.com/CloudGuardian/CloudGuardian"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium rounded-md text-gray-300 bg-gray-800 hover:bg-gray-700"

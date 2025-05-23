@@ -52,7 +52,7 @@ export default function Navbar() {
 								<div className="h-8 w-8 rounded-full bg-blue-600 mr-2 flex items-center justify-center">
 									<span className="font-bold text-white">D</span>
 								</div>
-								<span className="font-bold text-xl text-white">DevGuard</span>
+								<span className="font-bold text-xl text-white">CloudGuardian</span>
 							</Link>
 						</div>
 

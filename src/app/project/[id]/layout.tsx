@@ -75,7 +75,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 
 			{/* Footer (only shown on smaller screens where sidebar doesn't take full height) */}
 			<div className="md:hidden bg-gray-800 border-t border-gray-700 p-4 text-center text-sm text-gray-400">
-				© {new Date().getFullYear()} DevGuard. All rights reserved.
+				© {new Date().getFullYear()} CloudGuardian. All rights reserved.
 			</div>
 		</div>
 	);

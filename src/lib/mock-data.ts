@@ -19,7 +19,7 @@ export const MockProjects: Project[] = [
 				title: "Updated vulnerable dependencies",
 				description: "Several dependencies were automatically updated to patch known security vulnerabilities.",
 				details:
-					"DevGuard automatically updated the following dependencies to address security issues: socket.io (CVE-2025-1234), uuid (CVE-2025-5678), and jsonwebtoken (CVE-2025-9012).",
+					"CloudGuardian automatically updated the following dependencies to address security issues: socket.io (CVE-2025-1234), uuid (CVE-2025-5678), and jsonwebtoken (CVE-2025-9012).",
 				path: "package.json",
 				timestamp: "2 days ago",
 				code: `- "socket.io": "^4.5.1",

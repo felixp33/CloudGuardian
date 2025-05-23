@@ -87,7 +87,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 							<div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xl font-bold mr-3">
 								D
 							</div>
-							<span className="text-white font-bold text-xl">DevGuard</span>
+							<span className="text-white font-bold text-xl">CloudGuardian</span>
 						</div>
 
 						<div className="flex space-x-6">
@@ -98,7 +98,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 								About
 							</Link>
 							<a
-								href="https://github.com/devguard/devguard"
+								href="https://github.com/CloudGuardian/CloudGuardian"
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-gray-300 hover:text-white text-sm"
@@ -114,7 +114,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						</div>
 
 						<div className="text-gray-400 text-sm mt-4 md:mt-0">
-							© {new Date().getFullYear()} DevGuard. All rights reserved.
+							© {new Date().getFullYear()} CloudGuardian. All rights reserved.
 						</div>
 					</div>
 				</div>

@@ -22,7 +22,7 @@ export default function Header() {
 						<div className="flex-shrink-0 flex items-center">
 							<div className="h-8 w-8 rounded-full bg-blue-600 mr-3"></div>
 							<Link href="/" className="font-bold text-xl text-gray-900 dark:text-white">
-								DevGuard
+								CloudGuardian
 							</Link>
 						</div>
 						<nav className="hidden sm:ml-6 sm:flex sm:space-x-8" aria-label="Global">

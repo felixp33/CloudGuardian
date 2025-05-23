@@ -70,7 +70,7 @@ export default function GitHubCallback() {
 					Select Repositories
 				</h2>
 				<p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-					Choose which repositories you want DevGuard to monitor
+					Choose which repositories you want CloudGuardian to monitor
 				</p>
 			</div>
 

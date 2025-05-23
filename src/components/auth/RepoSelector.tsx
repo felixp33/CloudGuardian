@@ -99,12 +99,12 @@ export default function RepoSelector() {
 		<div className="space-y-6">
 			<div className="text-gray-700 dark:text-gray-300">
 				<p className="mb-4">
-					Select the repositories you want DevGuard to monitor. We'll analyze them for security vulnerabilities and
-					improvement opportunities.
+					Select the repositories you want CloudGuardian to monitor. We'll analyze them for security
+					vulnerabilities and improvement opportunities.
 				</p>
 				<p className="text-sm bg-blue-50 dark:bg-blue-900 p-4 rounded-md border border-blue-200 dark:border-blue-800">
-					<strong>Note:</strong> DevGuard needs read access to your repository code to analyze it effectively. We
-					never store your code and all analysis is done securely.
+					<strong>Note:</strong> CloudGuardian needs read access to your repository code to analyze it effectively.
+					We never store your code and all analysis is done securely.
 				</p>
 			</div>
 

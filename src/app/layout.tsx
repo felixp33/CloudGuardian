@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "@/styles/global.css";
 
 export const metadata: Metadata = {
-	title: "DevGuard - Security Monitoring for GitHub Repositories",
+	title: "CloudGuardian - Security Monitoring for GitHub Repositories",
 	description: "Monitor your GitHub repositories for security vulnerabilities and improvement opportunities",
 };
 

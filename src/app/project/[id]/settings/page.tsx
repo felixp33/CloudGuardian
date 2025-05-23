@@ -294,7 +294,7 @@ export default function ProjectSettingsPage() {
 								description="Channel to send notifications to"
 								value={settings.slackChannel}
 								onChange={(value) => updateSetting("slackChannel", value)}
-								placeholder="#devguard-alerts"
+								placeholder="#CloudGuardian-alerts"
 							/>
 						)}
 					</div>
@@ -341,7 +341,7 @@ export default function ProjectSettingsPage() {
 								type="button"
 								className="inline-flex items-center px-4 py-2 border border-red-700 text-sm font-medium rounded-md text-red-400 bg-gray-800 hover:bg-red-900 hover:text-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
 							>
-								Remove Project from DevGuard
+								Remove Project from CloudGuardian
 							</button>
 						</div>
 					</div>
