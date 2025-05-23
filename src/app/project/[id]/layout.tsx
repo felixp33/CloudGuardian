@@ -2,6 +2,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
@@ -24,7 +25,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						<p className="mt-2 text-gray-400">
 							The project you're looking for doesn't exist or you don't have access to it.
 						</p>
-						<a
+						<Link
 							href="/"
 							className="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
 						>
@@ -41,7 +42,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 								/>
 							</svg>
 							Back to projects
-						</a>
+						</Link>
 					</div>
 				</main>
 			</div>
@@ -70,6 +71,11 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 						</div>
 					</div>
 				</main>
+			</div>
+
+			{/* Footer (only shown on smaller screens where sidebar doesn't take full height) */}
+			<div className="md:hidden bg-gray-800 border-t border-gray-700 p-4 text-center text-sm text-gray-400">
+				© {new Date().getFullYear()} DevGuard. All rights reserved.
 			</div>
 		</div>
 	);
