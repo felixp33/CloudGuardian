@@ -3,18 +3,9 @@ import React from "react";
 import { GitHubIcon } from "../Icons";
 
 export default function GitHubLogin() {
-	// In a real application, this would redirect to the GitHub OAuth flow
-	const handleLogin = () => {
-		// Redirect to GitHub OAuth endpoint
-		// window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.NEXT_PUBLIC_REDIRECT_URI)}&scope=repo,read:user,user:email`;
-
-		// For demo purposes, we'll just simulate a successful login
-		console.log("Redirecting to GitHub OAuth...");
-		// Mock redirect to callback page after small delay
-		setTimeout(() => {
-			window.location.href = "/auth/callback?code=mock_code";
-		}, 1000);
-	};
+        const handleLogin = () => {
+                window.location.href = "/api/auth/login";
+        };
 
 	return (
 		<button
