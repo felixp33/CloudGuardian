@@ -5,14 +5,22 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { MockProjects } from "@/lib/mock-data";
+import { loadUserProjects } from "@/lib/storage";
 import { Project } from "@/types";
 
 export default function Navbar() {
 	const router = useRouter();
 	const pathname = usePathname();
 	const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
-	const [projects, setProjects] = useState<Project[]>(MockProjects);
-	const dropdownRef = useRef<HTMLDivElement>(null);
+        const [projects, setProjects] = useState<Project[]>(MockProjects);
+
+        useEffect(() => {
+                const stored = loadUserProjects();
+                if (stored.length > 0) {
+                        setProjects([...MockProjects, ...stored]);
+                }
+        }, []);
+        const dropdownRef = useRef<HTMLDivElement>(null);
 
 	// Extract project ID from URL if we're on a project page
 	const projectIdMatch = pathname?.match(/\/project\/([^\/]+)/);

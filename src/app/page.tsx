@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { MockProjects } from "@/lib/mock-data";
+import { loadUserProjects } from "@/lib/storage";
 import { Project } from "@/types";
 import Navbar from "@/components/layout/Navbar";
 
@@ -130,7 +131,13 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
 };
 
 export default function HomePage() {
-	const [projects] = useState(MockProjects);
+        const [projects, setProjects] = useState<Project[]>(MockProjects);
+        useEffect(() => {
+                const stored = loadUserProjects();
+                if (stored.length > 0) {
+                        setProjects([...MockProjects, ...stored]);
+                }
+        }, []);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [sortBy, setSortBy] = useState<"activity" | "alphabetical" | "issues">("activity");
 
