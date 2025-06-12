@@ -1,6 +1,8 @@
 // components/auth/RepoSelector.tsx
 import React, { useState, useEffect } from "react";
 import { GitHubIcon } from "../Icons";
+import { saveUserProjects, loadUserProjects } from "@/lib/storage";
+import { Project } from "@/types";
 
 type Repository = {
 	id: number;
@@ -66,12 +68,26 @@ export default function RepoSelector() {
 		setRepos(repos.map((repo) => (repo.id === id ? { ...repo, selected: !repo.selected } : repo)));
 	};
 
-	const handleSubmit = () => {
-		const selectedRepos = repos.filter((repo) => repo.selected);
-		console.log("Selected repositories:", selectedRepos);
-		// In a real app, we would send this to the backend
-		window.location.href = "/";
-	};
+        const handleSubmit = () => {
+                const selectedRepos = repos.filter((repo) => repo.selected);
+                const existing = loadUserProjects();
+
+                const newProjects: Project[] = selectedRepos.map((repo) => ({
+                        id: repo.name,
+                        name: repo.name,
+                        owner: repo.full_name.split("/")[0],
+                        url: repo.html_url,
+                        repoUrl: repo.html_url,
+                        lastUpdated: "Just now",
+                        lastUpdatedDate: new Date().toISOString(),
+                        automaticChanges: [],
+                        securityRecommendations: [],
+                        improvementSuggestions: [],
+                }));
+
+                saveUserProjects([...existing, ...newProjects]);
+                window.location.href = "/";
+        };
 
 	if (loading) {
 		return (
