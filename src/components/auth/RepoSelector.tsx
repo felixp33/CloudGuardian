@@ -15,54 +15,28 @@ type Repository = {
 };
 
 export default function RepoSelector() {
-	const [repos, setRepos] = useState<Repository[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
+        const [repos, setRepos] = useState<Repository[]>([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState<string | null>(null);
 
-	// In a real app, we would fetch repositories from GitHub API
-	useEffect(() => {
-		// Simulate API call
-		setTimeout(() => {
-			// Mock repositories data
-			const mockRepos: Repository[] = [
-				{
-					id: 1,
-					name: "ryon",
-					full_name: "felixp33/ryon",
-					description: "A web application built with Next.js",
-					html_url: "https://github.com/felixp33/ryon",
-					private: false,
-				},
-				{
-					id: 2,
-					name: "findmyklez",
-					full_name: "felixp33/findmyklez",
-					description: "Location-based discovery app",
-					html_url: "https://github.com/felixp33/findmyklez",
-					private: false,
-				},
-				{
-					id: 3,
-					name: "flatswaps",
-					full_name: "felixp33/flatmatch",
-					description: "Property rental and exchange platform",
-					html_url: "https://github.com/felixp33/flatmatch",
-					private: true,
-				},
-				{
-					id: 4,
-					name: "personal-blog",
-					full_name: "felixp33/personal-blog",
-					description: "My personal blog built with Gatsby",
-					html_url: "https://github.com/felixp33/personal-blog",
-					private: false,
-				},
-			];
+        useEffect(() => {
+                async function fetchRepos() {
+                        try {
+                                const res = await fetch("/api/github/repos");
+                                if (!res.ok) {
+                                        throw new Error("Failed to load repositories");
+                                }
+                                const data = await res.json();
+                                setRepos(data);
+                        } catch (err) {
+                                setError((err as Error).message);
+                        } finally {
+                                setLoading(false);
+                        }
+                }
 
-			setRepos(mockRepos);
-			setLoading(false);
-		}, 1000);
-	}, []);
+                fetchRepos();
+        }, []);
 
 	const toggleRepo = (id: number) => {
 		setRepos(repos.map((repo) => (repo.id === id ? { ...repo, selected: !repo.selected } : repo)));
